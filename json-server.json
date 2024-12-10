@@ -1,4 +1,0 @@
-{
-  "routes": "./src/server/routes.json",
-  "port": 3001
-}

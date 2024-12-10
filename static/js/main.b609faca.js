@@ -1,0 +1,2 @@
+(()=>{"use strict";const t=async()=>{try{const t=await fetch("/api/data");return await t.json()}catch(t){throw console.error("Error fetching data:",t),t}};t().then((t=>console.log(t)))})();
+//# sourceMappingURL=main.b609faca.js.map
