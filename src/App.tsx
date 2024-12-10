@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
+import React, { useEffect, useState } from 'react';
+import { fetchData, RESPONSE_DATA } from './index'; // Импортируем fetchData
 
-function App() {
+const App: React.FC = () => {
+  const [data, setData] = useState<RESPONSE_DATA | null>(null);  // Состояние для данных
+  const [loading, setLoading] = useState<boolean>(true);  // Состояние для индикатора загрузки
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        console.log('Fetching data...'); // Логируем запрос
+        const result = await fetchData();  // Получаем данные
+        console.log('Data received:', result); // Логируем результат
+        setData(result);  // Сохраняем данные в состояние
+      } catch (error) {
+        console.error('Error loading data:', error);  // Обработка ошибки
+      } finally {
+        setLoading(false);  // Завершаем процесс загрузки
+      }
+    };
+
+    loadData();  // Вызываем функцию загрузки данных
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>API Data</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <p>{data?.greeting || 'No data available'}</p>  // Отображаем данные или сообщение о их отсутствии
+      )}
     </div>
   );
-}
+};
 
 export default App;
+
